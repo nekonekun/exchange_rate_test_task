@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "exchange-rate-bot"
+version = "0.1.0"
+description = ""
+authors = ["Ivan Balakin <nekonekun@gmail.com>"]
+readme = "README.md"
+packages = [{include = "exchange_rate_bot", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
