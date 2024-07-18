@@ -1,4 +1,4 @@
-from typing import Protocol, Iterable
+from typing import Iterable, Protocol
 
 
 class CacheError(Exception):

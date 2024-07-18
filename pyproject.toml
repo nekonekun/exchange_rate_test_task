@@ -24,6 +24,16 @@ ruff = "^0.5.2"
 [tool.poetry.scripts]
 exchange_bot = 'exchange_rate_bot.main.bot:main'
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "single"
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D", "ANN", "FA102", "B", "RUF", "PLR", "S314", "G004"]
 
 [build-system]
 requires = ["poetry-core"]

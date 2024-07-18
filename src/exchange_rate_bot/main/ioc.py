@@ -2,15 +2,15 @@ import os
 from typing import AsyncIterable
 
 from aiohttp import ClientSession
-from dishka import Provider, alias, Scope, provide
+from dishka import Provider, Scope, alias, provide
 from faststream.redis import RedisBroker, RedisPublisher
 from redis.asyncio import Redis
 
 from exchange_rate_bot.adapters.central_bank import CentralBankAdapter
-from exchange_rate_bot.usecases.protocols.cache import CacheProtocol
-from exchange_rate_bot.usecases.protocols.currency import CurrencyProtocol
 from exchange_rate_bot.usecases.convert_currency import ConvertCurrency
 from exchange_rate_bot.usecases.get_all_rates import GetAllRates
+from exchange_rate_bot.usecases.protocols.cache import CacheProtocol
+from exchange_rate_bot.usecases.protocols.currency import CurrencyProtocol
 from exchange_rate_bot.usecases.protocols.publisher import PublisherProtocol
 from exchange_rate_bot.usecases.update_rates import KickUpdateRates, UpdateRates
 

@@ -1,4 +1,4 @@
-from exchange_rate_bot.usecases.protocols.cache import CacheProtocol, CacheError
+from exchange_rate_bot.usecases.protocols.cache import CacheError, CacheProtocol
 from exchange_rate_bot.usecases.protocols.currency import CurrencyInfo
 
 

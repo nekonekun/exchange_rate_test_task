@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from aiogram import Dispatcher, Bot
+from aiogram import Bot, Dispatcher
 from dishka import make_async_container
 from dishka.integrations.aiogram import setup_dishka
 

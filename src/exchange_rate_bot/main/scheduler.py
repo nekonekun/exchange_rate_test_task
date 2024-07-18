@@ -1,9 +1,8 @@
 import os
 
-from taskiq_faststream import BrokerWrapper
-from taskiq_faststream import StreamScheduler
-from taskiq.schedule_sources import LabelScheduleSource
 from faststream.redis import RedisBroker
+from taskiq.schedule_sources import LabelScheduleSource
+from taskiq_faststream import BrokerWrapper, StreamScheduler
 
 from exchange_rate_bot.usecases.protocols.publisher import KickMessage
 
@@ -21,10 +20,12 @@ taskiq_broker = BrokerWrapper(broker)
 
 taskiq_broker.task(
     message=KickMessage(),
-    channel="updater-channel",
-    schedule=[{
-        "cron": schedule,
-    }],
+    channel='updater-channel',
+    schedule=[
+        {
+            'cron': schedule,
+        },
+    ],
 )
 
 scheduler = StreamScheduler(

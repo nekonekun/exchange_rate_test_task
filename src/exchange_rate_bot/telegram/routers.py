@@ -1,11 +1,14 @@
 from aiogram import Router
 from aiogram.enums.parse_mode import ParseMode
-from aiogram.filters.command import CommandStart, Command, CommandObject
+from aiogram.filters.command import Command, CommandObject, CommandStart
 from aiogram.types.message import Message
-from dishka.integrations.aiogram import inject, FromDishka
+from dishka.integrations.aiogram import FromDishka, inject
 
-from exchange_rate_bot.usecases.get_all_rates import GetAllRates, GetAllRatesError
-from exchange_rate_bot.usecases.convert_currency import ConvertCurrency, ConvertCurrencyError, CurrencyNotFoundError
+from exchange_rate_bot.usecases.convert_currency import (
+    ConvertCurrency,
+    CurrencyNotFoundError,
+)
+from exchange_rate_bot.usecases.get_all_rates import GetAllRates
 from exchange_rate_bot.usecases.update_rates import KickUpdateRates, UpdateRatesError
 
 router = Router()
@@ -26,7 +29,10 @@ async def rates_handler(
     rates = await get_all_rates()
     text = ''
     for currency in rates:
-        text += f' • <code>{currency.char_code}</code> ({currency.name}): <code>{currency.value}</code> (за {currency.nominal})\n'
+        text += (
+            f' • <code>{currency.char_code}</code> ({currency.name}): '
+            f'<code>{currency.value}</code> (за {currency.nominal})\n'
+        )
     await message.answer(text, parse_mode=ParseMode.HTML)
 
 
@@ -41,8 +47,7 @@ async def exchange_handler(
     args = command.args.split(' ')
     if len(args) == 0:
         return await message.answer(
-            'Формат аргументов: CUR [CUR [AMOUNT]]\n'
-            'Например, USD или USD EUR или USD RUB 10'
+            'Формат аргументов: CUR [CUR [AMOUNT]]\nНапример, USD или USD EUR или USD RUB 10',
         )
     if len(args) == 1:
         from_currency = args[0]
@@ -61,13 +66,13 @@ async def exchange_handler(
             return await message.answer(
                 'Некорректный формат\n'
                 'Формат аргументов: CUR [CUR [AMOUNT]]\n'
-                'Например, USD или USD EUR или USD RUB 10'
+                'Например, USD или USD EUR или USD RUB 10',
             )
     else:
         return await message.answer(
             'Некорректный формат\n'
             'Формат аргументов: CUR [CUR [AMOUNT]]\n'
-            'Например, USD или USD EUR или USD RUB 10'
+            'Например, USD или USD EUR или USD RUB 10',
         )
     try:
         result = await convert_currency(from_currency, to_currency, amount)
@@ -81,7 +86,7 @@ async def exchange_handler(
 
 @router.message(Command(commands=['update']))
 @inject
-async def exchange_handler(
+async def update_request_handler(
     message: Message,
     *,
     kick_update_rates: FromDishka[KickUpdateRates],
@@ -91,4 +96,3 @@ async def exchange_handler(
     except UpdateRatesError:
         return await message.answer('Что-то пошло не так')
     return await message.answer('Команда на обновление курсов валют отправлена')
-

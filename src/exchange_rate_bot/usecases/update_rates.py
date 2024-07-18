@@ -1,8 +1,12 @@
-from secrets import token_urlsafe
-
-from exchange_rate_bot.usecases.protocols.currency import CurrencyProtocol, CurrencyError
-from exchange_rate_bot.usecases.protocols.cache import CacheProtocol, CacheError
-from exchange_rate_bot.usecases.protocols.publisher import PublisherProtocol, KickMessage
+from exchange_rate_bot.usecases.protocols.cache import CacheError, CacheProtocol
+from exchange_rate_bot.usecases.protocols.currency import (
+    CurrencyError,
+    CurrencyProtocol,
+)
+from exchange_rate_bot.usecases.protocols.publisher import (
+    KickMessage,
+    PublisherProtocol,
+)
 
 
 class UpdateRatesError(Exception):
@@ -18,16 +22,16 @@ class UpdateRates:
         try:
             currencies_info_list = await self.currency.get_actual_rates()
         except CurrencyError as e:
-            raise UpdateRatesError(e)
+            raise UpdateRatesError from e
 
-        for element in currencies_info_list:
-            try:
+        try:
+            for element in currencies_info_list:
                 await self.cache.set(
                     name=f'currency:{element.char_code}',
                     value=element.model_dump_json(),
                 )
-            except CacheError as e:
-                raise UpdateRatesError(e)
+        except CacheError as e:
+            raise UpdateRatesError from e
 
 
 class KickUpdateRates:

@@ -26,13 +26,17 @@ class ConvertCurrency:
                 value=Decimal(1),
                 vunit_rate=Decimal(1),
             )
-        else:
-            from_info = await self.cache.get(f'currency:{currency}')
-            if from_info is None:
-                raise CurrencyNotFoundError
-            return CurrencyInfo.model_validate_json(from_info)
+        from_info = await self.cache.get(f'currency:{currency}')
+        if from_info is None:
+            raise CurrencyNotFoundError
+        return CurrencyInfo.model_validate_json(from_info)
 
-    async def __call__(self, from_currency: str, to_currency: str, amount: float) -> Decimal:
+    async def __call__(
+        self,
+        from_currency: str,
+        to_currency: str,
+        amount: float,
+    ) -> Decimal:
         from_info = await self.parse_currency(from_currency)
         to_info = await self.parse_currency(to_currency)
         return Decimal(amount) * from_info.vunit_rate / to_info.vunit_rate

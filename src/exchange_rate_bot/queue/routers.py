@@ -1,5 +1,5 @@
-from dishka.integrations.faststream import inject, FromDishka
-from faststream import Logger, Context
+from dishka.integrations.faststream import FromDishka, inject
+from faststream import Logger
 from faststream.redis import RedisRouter
 
 from exchange_rate_bot.usecases.protocols.publisher import KickMessage
@@ -18,5 +18,5 @@ async def update_rates_handler(
     if msg.requested_by:
         logger.info(f'Пользователь {msg.requested_by} запросил обновление курсов валют')
     else:
-        logger.info(f'Обновление курсов валют запущено по расписанию')
+        logger.info('Обновление курсов валют запущено по расписанию')
     await update_rates()
