@@ -1,6 +1,6 @@
 ## What is it for?
 
- - updates currency rates ones per 15 minutes according to Central Bank of Russia
+ - updates currency rates ones a day according to Central Bank of Russia
  - show all currency rates via `/rates` command
  - converts one currency to another via `/exchange` command
     - converts to rubles `/exchange USD`
