@@ -25,5 +25,16 @@ services:
       - redis
     restart: always
 
+  worker:
+    build: .
+    environment:
+      PYTHONPATH: ".:./src"
+    command: poetry run faststream run --factory exchange_rate_bot.main.queue:create_app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: always
+
 volumes:
   redis_data:

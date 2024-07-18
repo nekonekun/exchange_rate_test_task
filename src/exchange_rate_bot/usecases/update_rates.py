@@ -1,5 +1,8 @@
+from secrets import token_urlsafe
+
 from exchange_rate_bot.usecases.protocols.currency import CurrencyProtocol, CurrencyError
 from exchange_rate_bot.usecases.protocols.cache import CacheProtocol, CacheError
+from exchange_rate_bot.usecases.protocols.publisher import PublisherProtocol, KickMessage
 
 
 class UpdateRatesError(Exception):
@@ -25,3 +28,11 @@ class UpdateRates:
                 )
             except CacheError as e:
                 raise UpdateRatesError(e)
+
+
+class KickUpdateRates:
+    def __init__(self, publisher: PublisherProtocol):
+        self.publisher = publisher
+
+    async def __call__(self, requested_by: int):
+        await self.publisher.publish(KickMessage(requested_by=requested_by))

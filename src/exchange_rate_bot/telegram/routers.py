@@ -6,7 +6,7 @@ from dishka.integrations.aiogram import inject, FromDishka
 
 from exchange_rate_bot.usecases.get_all_rates import GetAllRates, GetAllRatesError
 from exchange_rate_bot.usecases.convert_currency import ConvertCurrency, ConvertCurrencyError, CurrencyNotFoundError
-from exchange_rate_bot.usecases.update_rates import UpdateRates, UpdateRatesError
+from exchange_rate_bot.usecases.update_rates import KickUpdateRates, UpdateRatesError
 
 router = Router()
 
@@ -69,7 +69,10 @@ async def exchange_handler(
             'Формат аргументов: CUR [CUR [AMOUNT]]\n'
             'Например, USD или USD EUR или USD RUB 10'
         )
-    result = await convert_currency(from_currency, to_currency, amount)
+    try:
+        result = await convert_currency(from_currency, to_currency, amount)
+    except CurrencyNotFoundError:
+        return await message.answer('Неправильный код валюты. Узнать допустимые коды можно командой /rates')
     return await message.answer(
         text=f'{amount} <code>{from_currency}</code> ≈ {result:.2f} <code>{to_currency}</code>',
         parse_mode=ParseMode.HTML,
@@ -81,11 +84,11 @@ async def exchange_handler(
 async def exchange_handler(
     message: Message,
     *,
-    update_rates: FromDishka[UpdateRates],
+    kick_update_rates: FromDishka[KickUpdateRates],
 ):
     try:
-        await update_rates()
+        await kick_update_rates(requested_by=message.from_user.id)
     except UpdateRatesError:
         return await message.answer('Что-то пошло не так')
-    return await message.answer('Курсы обновлены')
+    return await message.answer('Команда на обновление курсов валют отправлена')
 
