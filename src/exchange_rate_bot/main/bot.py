@@ -9,7 +9,7 @@ from exchange_rate_bot.main.ioc import MainProvider
 from exchange_rate_bot.telegram.routers import router
 
 
-async def main():
+async def start_bot():
     token = os.getenv('BOT_TOKEN')
     dispatcher = Dispatcher()
     dispatcher.include_router(router)
@@ -23,5 +23,9 @@ async def main():
         await bot.session.close()
 
 
+def main():
+    asyncio.run(start_bot())
+
+
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()

@@ -14,6 +14,14 @@ taskiq = "^0.11.6"
 taskiq-redis = "^1.0.0"
 aiohttp = "^3.9.5"
 dishka = "^1.2.0"
+faststream = "^0.5.14"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.2"
+
+[tool.poetry.scripts]
+exchange_bot = 'exchange_rate_bot.main.bot:main'
 
 
 [build-system]
