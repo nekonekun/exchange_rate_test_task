@@ -865,6 +865,29 @@ files = [
 ]
 
 [[package]]
+name = "taskiq-faststream"
+version = "0.1.8"
+description = "FastStream - taskiq integration to schedule FastStream tasks"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "taskiq_faststream-0.1.8-py3-none-any.whl", hash = "sha256:44c50a4808f8bb4657eceb21cf22c8fc1905b248e10de94fed85172909266262"},
+    {file = "taskiq_faststream-0.1.8.tar.gz", hash = "sha256:d93a57409f3cabb908ac356e26b04bfb3f289247d8b8c6e58cf87ee2117579b0"},
+]
+
+[package.dependencies]
+faststream = ">=0.3.14,<0.6.0"
+taskiq = ">=0.10.0,<1.0.0"
+
+[package.extras]
+dev = ["coverage[toml] (>=7.2.0,<8.0.0)", "faststream[kafka]", "faststream[nats]", "faststream[rabbit]", "faststream[redis]", "mypy (>=1.8.0,<1.10.0)", "pre-commit (>=3.6.0,<4.0.0)", "pytest (>=7.4.0,<9)", "ruff (==0.4.1)"]
+kafka = ["faststream[kafka]"]
+nats = ["faststream[nats]"]
+rabbit = ["faststream[rabbit]"]
+redis = ["faststream[redis]"]
+test = ["coverage[toml] (>=7.2.0,<8.0.0)", "faststream[kafka]", "faststream[nats]", "faststream[rabbit]", "faststream[redis]", "pytest (>=7.4.0,<9)"]
+
+[[package]]
 name = "taskiq-redis"
 version = "1.0.0"
 description = "Redis integration for taskiq"
@@ -1028,4 +1051,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "928792b6ffc6552a49dcc66abd9e07187e1e8d560dd0d37b3db9d89ea2eb01b1"
+content-hash = "d53f375f21efcefc6a310d9dc85fd797b7a467d0101dabde72168e0679eb8844"

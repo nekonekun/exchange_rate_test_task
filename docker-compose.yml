@@ -36,5 +36,16 @@ services:
       - redis
     restart: always
 
+  scheduler:
+    build: .
+    environment:
+      PYTHONPATH: ".:./src"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    command: poetry run taskiq scheduler exchange_rate_bot.main.scheduler:scheduler
+    restart: unless-stopped
+
 volumes:
   redis_data:

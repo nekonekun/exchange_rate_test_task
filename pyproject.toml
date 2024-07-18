@@ -15,6 +15,7 @@ taskiq-redis = "^1.0.0"
 aiohttp = "^3.9.5"
 dishka = "^1.2.0"
 faststream = "^0.5.14"
+taskiq-faststream = "^0.1.8"
 
 
 [tool.poetry.group.dev.dependencies]
