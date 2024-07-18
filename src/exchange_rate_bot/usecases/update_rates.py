@@ -20,7 +20,7 @@ class UpdateRates:
         for element in currencies_info_list:
             try:
                 await self.cache.set(
-                    name=f'currency:{element.name}',
+                    name=f'currency:{element.char_code}',
                     value=element.model_dump_json(),
                 )
             except CacheError as e:
