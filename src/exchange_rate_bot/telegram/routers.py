@@ -28,7 +28,7 @@ async def rates_handler(
 ):
     rates = await get_all_rates()
     text = ''
-    for currency in rates:
+    for currency in sorted(rates, key=lambda x: x.char_code):
         text += (
             f' • <code>{currency.char_code}</code> ({currency.name}): '
             f'<code>{currency.value}</code> (за {currency.nominal})\n'
