@@ -10,6 +10,7 @@ from exchange_rate_bot.usecases.protocols.publisher import KickMessage
 redis_host = os.getenv('REDIS_HOST', 'localhost')
 redis_port = int(os.getenv('REDIS_PORT', '6379'))
 redis_db = int(os.getenv('REDIS_QUEUE_DB', '1'))
+schedule = os.getenv('SCHEDULE_CRON', '*/15 * * * *')
 
 broker = RedisBroker(
     host=redis_host,
@@ -22,7 +23,7 @@ taskiq_broker.task(
     message=KickMessage(),
     channel="updater-channel",
     schedule=[{
-        "cron": "0 */3 * * *",
+        "cron": schedule,
     }],
 )
 
