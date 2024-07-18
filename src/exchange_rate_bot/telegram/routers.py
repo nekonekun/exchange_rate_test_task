@@ -44,6 +44,10 @@ async def exchange_handler(
     *,
     convert_currency: FromDishka[ConvertCurrency],
 ):
+    if not command.args:
+        return await message.answer(
+            'Формат аргументов: CUR [CUR [AMOUNT]]\nНапример, USD или USD EUR или USD RUB 10',
+        )
     args = command.args.split(' ')
     if len(args) == 0:
         return await message.answer(
